@@ -1,11 +1,9 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Patch, Query } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 @Controller('auth')
 export class UsersController {
     constructor(private usersService: UsersService) {}
-
-
 
     @Post('/signup')
     createUser(@Body() body: CreateUserDto) {
@@ -15,11 +13,13 @@ export class UsersController {
 
     @Post('/signin')
     signin() {
-        return 'Sign in';
-    }
+        return 'Sign in'; 
+    } 
 
     @Get('/:id')
-    getUser(@Param('id') id: string) {
-        return `User ${id}`;
+    findUser(@Param('id') id: string) {
+        return this.usersService.findOne(parseInt(id));
     }
+
+
 }
